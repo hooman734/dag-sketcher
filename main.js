@@ -1,5 +1,6 @@
 const SVG = document.getElementById('SVG');
 const TXT = document.getElementById("input-data");
+const SKETCH = document.getElementById("sketch")
 
 
 const availableWidth = SVG.clientWidth;
@@ -12,24 +13,35 @@ const nodesInput = {
     'E': [],
 }
 
-const parsedData = [];
+
 
 const dataParser = (e) => {
+
     if (e.keyCode === 13) {
         const text = TXT.value;
-        const points = [...text.matchAll(/(\S*)\s*->\s*(\S*)/gm)].map(match => [match[1], match[2]]);
-        parsedData.push(points);
-        console.log(parsedData);
-        console.log(TXT.value);
+        const parsedData = [...text.matchAll(/(\S*)\s*->\s*(\S*)/gm)].map(match => [match[1], match[2]]);
+        if (parsedData.length > 0) {
+            const startNode = parsedData.at(-1)[0];
+            const endNode = parsedData.at(-1)[1];
+            const startNodes = Object.keys(nodesInput);
+            if (!startNodes.includes(endNode)) {
+                nodesInput[`${endNode}`] = [];
+            }
+            if (startNodes.includes(startNode)) {
+                nodesInput[`${startNode}`] = [...nodesInput[`${startNode}`], `${endNode}`];
+            } else {
+                nodesInput[`${startNode}`] = [`${endNode}`];
+            }
+            console.log(nodesInput);
+        }
     }
 }
 document.addEventListener("keypress", dataParser);
 
 
-
 const board = [];
 
-const nodeNames = Object.keys(nodesInput);
+
 
 const randomAxisGenerator = (tolerance=50) => {
     const height = tolerance + Math.floor(Math.random() * (availableHeight - tolerance * 2));
@@ -147,25 +159,31 @@ class Arrow {
     }
 }
 
-const nodes = [];
+const sketch = () => {
+    const nodeNames = Object.keys(nodesInput);
+    const nodes = [];
 
-nodeNames.forEach(nodeName => {
-    const newAxis = axisGenerator();
-    newNode = new Node(nodeName, newAxis.width, newAxis.height, neighbors=nodesInput[nodeName]);
-    nodes.push(newNode);
-    console.log(newNode);
-});
-
-nodes.forEach(node => {
-    node.neighbors.forEach(neighbor => {
-        const neighborNode = nodes.find(node => node.tagName === neighbor);
-        const newArrow = new Arrow(node.x, node.y, neighborNode.x, neighborNode.y);
-        newArrow.show(SVG);
+    nodeNames.forEach(nodeName => {
+        const newAxis = axisGenerator();
+        newNode = new Node(nodeName, newAxis.width, newAxis.height, neighbors=nodesInput[nodeName]);
+        nodes.push(newNode);
+        console.log(newNode);
     });
-});
 
-nodes.forEach(node => {
-    node.show(SVG);
-});
+    nodes.forEach(node => {
+        node.neighbors.forEach(neighbor => {
+            const neighborNode = nodes.find(node => node.tagName === neighbor);
+            const newArrow = new Arrow(node.x, node.y, neighborNode.x, neighborNode.y);
+            newArrow.show(SVG);
+        });
+    });
+
+    nodes.forEach(node => {
+        node.show(SVG);
+    });
+}
+
+SKETCH.addEventListener("click", sketch);
+
 
 
