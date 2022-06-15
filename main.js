@@ -1,4 +1,6 @@
 const SVG = document.getElementById('SVG');
+const TXT = document.getElementById("input-data");
+
 
 const availableWidth = SVG.clientWidth;
 const availableHeight = SVG.clientHeight;
@@ -9,6 +11,21 @@ const nodesInput = {
     'C': ['E'],
     'E': [],
 }
+
+const parsedData = [];
+
+const dataParser = (e) => {
+    if (e.keyCode === 13) {
+        const text = TXT.value;
+        const points = [...text.matchAll(/(\S*)\s*->\s*(\S*)/gm)].map(match => [match[1], match[2]]);
+        parsedData.push(points);
+        console.log(parsedData);
+        console.log(TXT.value);
+    }
+}
+document.addEventListener("keypress", dataParser);
+
+
 
 const board = [];
 
