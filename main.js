@@ -11,11 +11,10 @@ let board = [];
 
 
 const dataParser = (e) => {
-   
-
+    
     if (e.keyCode === 13) {
         const text = TXT.value;
-        const parsedData = [...text.matchAll(/(\S*)\s*->\s*(\S*)/gm)].map(match => [match[1], match[2]]);
+        const parsedData = [...text.matchAll(/(\S*)\s*-[>+*]\s*(\S*)/gm)].map(match => [match[1], match[2]]);
         if (parsedData.length > 0) {
             const startNode = parsedData.at(-1)[0];
             const endNode = parsedData.at(-1)[1];
@@ -39,7 +38,7 @@ const dataParser = (e) => {
 document.addEventListener("keypress", dataParser);
 
 
-const randomAxisGenerator = (tolerance=50) => {
+const randomAxisGenerator = (tolerance=60) => {
     const height = tolerance + Math.floor(Math.random() * (availableHeight - tolerance * 2));
     const width = tolerance + Math.floor(Math.random() * (availableWidth - tolerance * 2));
 
@@ -202,9 +201,9 @@ const clearSketch = () => {
             arrow.remove(SVG);
         });
     }
-    // board = [];
     nodes = [];
     arrows = [];
+    board=[];
 }
 
 
