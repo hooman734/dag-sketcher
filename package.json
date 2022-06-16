@@ -1,0 +1,25 @@
+{
+  "name": "dag-sketcher",
+  "version": "1.0.0",
+  "description": "Using vanilla JS and SVG to sketch the DAG graphs.",
+  "main": "main.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hooman734/dag-sketcher.git"
+  },
+  "keywords": [
+    "dag",
+    "graph",
+    "svg",
+    "js"
+  ],
+  "author": "Hooman Hesamyan (hesamyan@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hooman734/dag-sketcher/issues"
+  },
+  "homepage": "https://github.com/hooman734/dag-sketcher#readme"
+}
