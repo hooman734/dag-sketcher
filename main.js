@@ -5,6 +5,7 @@ const SKETCH = document.getElementById("sketch")
 
 const availableWidth = SVG.clientWidth;
 const availableHeight = SVG.clientHeight;
+const availableRadius = (availableWidth + availableHeight) / 70;
 
 let nodesInput = {};
 let board = [];
@@ -38,7 +39,7 @@ const dataParser = (e) => {
 document.addEventListener("keypress", dataParser);
 
 
-const randomAxisGenerator = (tolerance=60) => {
+const randomAxisGenerator = (tolerance=2*availableRadius) => {
     const height = tolerance + Math.floor(Math.random() * (availableHeight - tolerance * 2));
     const width = tolerance + Math.floor(Math.random() * (availableWidth - tolerance * 2));
 
@@ -60,7 +61,7 @@ class Axis {
         this.width = width;
     }
 
-    overlaps(other, tolerance=150) {
+    overlaps(other, tolerance=5*availableRadius) {
         const xDifSquared = (this.width - other.width) ** 2;
         const yDifSquared = (this.height - other.height) ** 2;
         const distanceSquared = Math.sqrt(xDifSquared + yDifSquared);
@@ -69,7 +70,7 @@ class Axis {
 }
 
 class Node {
-    constructor(tagName, x, y, neighbors=[], radius=30) {
+    constructor(tagName, x, y, neighbors=[], radius=availableRadius) {
         this.radius = radius;
         this.x = x + this.radius;
         this.y = y + this.radius;
@@ -93,9 +94,9 @@ class Node {
     nodeTagMaker() {
         const tag = document.createElementNS('http://www.w3.org/2000/svg','text');
         tag.setAttribute('x', `${this.x}`);
-        tag.setAttribute('y', `${this.y+10}`);
+        tag.setAttribute('y', `${this.y+availableRadius/4}`);
         tag.setAttribute('fill', 'black');
-        tag.setAttribute('font-size',  '18');
+        tag.setAttribute('font-size',  `${availableRadius*0.8}`);
         tag.setAttribute('font-family', 'Verdana');
         tag.setAttribute('text-anchor', 'middle');
         tag.textContent = `${this.tagName}`;
@@ -115,7 +116,7 @@ class Node {
 
 
 class Arrow {
-    constructor(x1, y1, x2, y2, margin=10) {
+    constructor(x1, y1, x2, y2, margin=availableRadius/3) {
         this.x1 = x1 + margin;
         this.y1 = y1 + margin;
         this.x2 = x2;
@@ -132,7 +133,7 @@ class Arrow {
         marker.setAttribute('id', 'arrowhead');
         marker.setAttribute('markerWidth', '10');
         marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', '30');
+        marker.setAttribute('refX', `${availableRadius+5}`);
         marker.setAttribute('refY', '3.5');
         marker.setAttribute('orient', 'auto');
 
