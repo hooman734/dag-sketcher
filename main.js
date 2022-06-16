@@ -6,16 +6,12 @@ const SKETCH = document.getElementById("sketch")
 const availableWidth = SVG.clientWidth;
 const availableHeight = SVG.clientHeight;
 
-const nodesInput = {
-    'A': ['B', 'E'],
-    'B': ['A'],
-    'C': ['E'],
-    'E': [],
-}
-
+let nodesInput = {};
+let board = [];
 
 
 const dataParser = (e) => {
+   
 
     if (e.keyCode === 13) {
         const text = TXT.value;
@@ -33,14 +29,14 @@ const dataParser = (e) => {
                 nodesInput[`${startNode}`] = [`${endNode}`];
             }
             console.log(nodesInput);
+        } else {
+            nodesInput = {};
+            board = [];
         }
     }
 }
+
 document.addEventListener("keypress", dataParser);
-
-
-const board = [];
-
 
 
 const randomAxisGenerator = (tolerance=50) => {
@@ -91,7 +87,7 @@ class Node {
         nodeElement.setAttribute('r', `${this.radius}`);
         nodeElement.setAttribute('fill', 'paleturquoise');
         nodeElement.setAttribute('stroke', 'blue');
-        nodeElement.setAttribute('stroke-width', '3');
+        nodeElement.setAttribute('stroke-width', '1');
         return nodeElement;
     }
 
@@ -100,7 +96,7 @@ class Node {
         tag.setAttribute('x', `${this.x}`);
         tag.setAttribute('y', `${this.y+10}`);
         tag.setAttribute('fill', 'black');
-        tag.setAttribute('font-size',  '26');
+        tag.setAttribute('font-size',  '18');
         tag.setAttribute('font-family', 'Verdana');
         tag.setAttribute('text-anchor', 'middle');
         tag.textContent = `${this.tagName}`;
@@ -110,6 +106,11 @@ class Node {
     show(svg) {
         svg.appendChild(this.element);
         svg.appendChild(this.tagElement);
+    }
+
+    remove(svg) {
+        svg.removeChild(this.tagElement);
+        svg.removeChild(this.element);
     }
 }
 
@@ -150,30 +151,37 @@ class Arrow {
         defs.appendChild(marker);
 
         return [defs, line];
-
     }
 
     show(svg) {
         svg.appendChild(this.elements[0]);
         svg.appendChild(this.elements[1]);
     }
+
+    remove(svg) {
+        this.elements.forEach(element => svg.removeChild(element));
+    }
 }
 
-const sketch = () => {
-    const nodeNames = Object.keys(nodesInput);
-    const nodes = [];
 
+let nodes = [];
+let arrows = [];
+
+const sketch = () => {
+    clearSketch();
+    const nodeNames = Object.keys(nodesInput);
+    
     nodeNames.forEach(nodeName => {
         const newAxis = axisGenerator();
         newNode = new Node(nodeName, newAxis.width, newAxis.height, neighbors=nodesInput[nodeName]);
         nodes.push(newNode);
-        console.log(newNode);
     });
 
     nodes.forEach(node => {
         node.neighbors.forEach(neighbor => {
             const neighborNode = nodes.find(node => node.tagName === neighbor);
             const newArrow = new Arrow(node.x, node.y, neighborNode.x, neighborNode.y);
+            arrows.push(newArrow);
             newArrow.show(SVG);
         });
     });
@@ -182,6 +190,23 @@ const sketch = () => {
         node.show(SVG);
     });
 }
+
+const clearSketch = () => {
+    if (nodes.length > 0) {
+        nodes.forEach(node => {
+            node.remove(SVG);
+        });
+    }
+    if (arrows.length > 0) {
+        arrows.forEach(arrow => {
+            arrow.remove(SVG);
+        });
+    }
+    // board = [];
+    nodes = [];
+    arrows = [];
+}
+
 
 SKETCH.addEventListener("click", sketch);
 
