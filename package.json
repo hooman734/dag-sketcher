@@ -21,9 +21,5 @@
   "bugs": {
     "url": "https://github.com/hooman734/dag-sketcher/issues"
   },
-  "homepage": "https://github.com/hooman734/dag-sketcher#readme",
-  "dependencies": {
-    "jspdf": "^2.5.1",
-    "svg2pdf.js": "^2.2.0"
-  }
+  "homepage": "https://github.com/hooman734/dag-sketcher#readme"
 }

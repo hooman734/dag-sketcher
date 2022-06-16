@@ -209,6 +209,3 @@ const clearSketch = () => {
 
 
 SKETCH.addEventListener("click", sketch);
-
-
-
