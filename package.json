@@ -2,7 +2,7 @@
   "name": "dag-sketcher",
   "version": "1.0.0",
   "description": "Using vanilla JS and SVG to sketch the DAG graphs.",
-  "main": "main.html",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
