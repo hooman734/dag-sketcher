@@ -81,6 +81,7 @@ button {
     box-shadow: 20px 10px 15px darkgray inset;
     color: rgb(10, 44, 9);
     width: 6rem;
+    cursor: pointer;
 }
 
 @media (min-width: 30em) and (orientation: landscape) {
@@ -148,5 +149,6 @@ button {
         color: rgb(44, 9, 9);
         width: auto;
         height: auto;
+        cursor: pointer;
     }
 }

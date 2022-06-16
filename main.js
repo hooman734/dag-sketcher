@@ -133,7 +133,7 @@ class Arrow {
         marker.setAttribute('id', 'arrowhead');
         marker.setAttribute('markerWidth', '10');
         marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', `${availableRadius+5}`);
+        marker.setAttribute('refX', `${availableRadius*1.005}`);
         marker.setAttribute('refY', '3.5');
         marker.setAttribute('orient', 'auto');
 
