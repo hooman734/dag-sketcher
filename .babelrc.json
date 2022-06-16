@@ -1,5 +1,5 @@
 {
     "presets": ["@babel/preset-env", "minify"],
-    "plugins": ["@babel/plugin-transform-function-name", "@babel/plugin-proposal-function-bind"]
+    "plugins": ["@babel/plugin-proposal-function-bind"]
 }
   
