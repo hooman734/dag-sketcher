@@ -23,7 +23,7 @@ body {
     overflow: auto;
     margin-left: 1rem;
     margin-right: 1rem;
-    border: solid 6px black;
+
 }
 
 #SVG {
@@ -32,7 +32,6 @@ body {
     width: 95%;
     height: 70%;
     margin-right: 0.5rem;
-    border: solid 6px green;
 }
 
 
@@ -60,7 +59,6 @@ h5 {
     background-color: #f5f5f8;
     cursor: text;
     outline: none;
-    border: solid 2px black;
 }
 
 #data-container {
@@ -70,7 +68,6 @@ h5 {
     width: 95%;
     overflow: auto;
     margin-left: 0.5rem;
-    border: red 3px solid;;
 }
 
 button {
