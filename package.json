@@ -4,6 +4,7 @@
   "description": "Using vanilla JS and SVG to sketch the DAG graphs.",
   "main": "index.html",
   "scripts": {
+    "babel": "npx babel ./src/main.js -o ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +22,12 @@
   "bugs": {
     "url": "https://github.com/hooman734/dag-sketcher/issues"
   },
-  "homepage": "https://github.com/hooman734/dag-sketcher#readme"
+  "homepage": "https://github.com/hooman734/dag-sketcher#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/plugin-proposal-function-bind": "^7.16.7",
+    "@babel/preset-env": "^7.18.2",
+    "babel-preset-minify": "^0.5.2"
+  }
 }
