@@ -34,7 +34,6 @@ body {
     margin-right: 0.5rem;
 }
 
-
 h3 {
     font-size: 1em;
     color: rgb(44, 9, 9);
@@ -71,20 +70,32 @@ h5 {
     margin-left: 0.5rem;
 }
 
-button {
+#button-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+#sketch, #clear, #adjust {
     margin-bottom: 1rem;
-    padding: 1rem 0.5rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1rem;
     background-color: lightgray;
-    border-radius: 2rem;
+    border-radius: 1rem;
     box-shadow: 20px 10px 15px darkgray inset;
     color: rgb(10, 44, 9);
     width: 6rem;
     cursor: pointer;
 }
 
-@media (min-width: 30em) and (orientation: landscape) {
+@media (min-width: 60em) and (orientation: landscape) {
 
     #SVG {
         display: flex;
@@ -115,40 +126,52 @@ button {
         display: flex;
         height: 100vh;
         flex-direction: column;
-        width: 30%;
+        width: 40%;
         overflow: auto;
 }
-    button {
-        margin-bottom: 1rem;
-        padding: 1rem 0.5rem;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 1.5rem;
-        background-color: lightgray;
-        border-radius: 2rem;
-        box-shadow: 20px 10px 15px darkgray inset;
-        color: rgb(44, 9, 9);
-    }
+
     h3 {
-        font-size: 2em;
+        font-size: 1.2em;
         color: rgb(44, 9, 9);
         padding-left: 0.5rem;
     }
     
     h5 {
-        font-size: 1.1em;
+        font-size: 1em;
         color: rgb(44, 9, 9);
     }
-    button {
+
+    #sketch, #clear, #adjust {
         margin-bottom: 1rem;
-        padding: 1rem 0.5rem;
+        padding: 0.5rem 1rem;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        font-size: 1.5rem;
+        font-size: 1rem;
         background-color: lightgray;
-        border-radius: 2rem;
+        border-radius: 1rem;
         box-shadow: 20px 10px 15px darkgray inset;
         color: rgb(44, 9, 9);
         width: auto;
         height: auto;
         cursor: pointer;
+    }
+
+    #button-group {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        height: 10%;
+        width: 100%;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (min-width: 100em) {
+    #sketch, #clear, #adjust {
+       
+        padding: 0.5rem 3rem;
+ 
     }
 }
