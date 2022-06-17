@@ -86,7 +86,7 @@ class Node {
         nodeElement.setAttribute('cy', `${this.y}`);
         nodeElement.setAttribute('r', `${this.radius}`);
         nodeElement.setAttribute('fill', 'paleturquoise');
-        nodeElement.setAttribute('stroke', 'blue');
+        nodeElement.setAttribute('stroke', 'black');
         nodeElement.setAttribute('stroke-width', '1');
         return nodeElement;
     }
@@ -96,7 +96,7 @@ class Node {
         tag.setAttribute('x', `${this.x}`);
         tag.setAttribute('y', `${this.y+availableRadius/4}`);
         tag.setAttribute('fill', 'black');
-        tag.setAttribute('font-size',  `${availableRadius*0.8}`);
+        tag.setAttribute('font-size',  `${availableRadius-(availableRadius/10)**2}`);
         tag.setAttribute('font-family', 'Verdana');
         tag.setAttribute('text-anchor', 'middle');
         tag.textContent = `${this.tagName}`;
@@ -133,7 +133,7 @@ class Arrow {
         marker.setAttribute('id', 'arrowhead');
         marker.setAttribute('markerWidth', '10');
         marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', `${availableRadius+10-availableRadius/100}`);
+        marker.setAttribute('refX', `${availableRadius+8-(availableRadius/10)**2}`);
         marker.setAttribute('refY', '3.5');
         marker.setAttribute('orient', 'auto');
 

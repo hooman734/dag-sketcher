@@ -86,7 +86,7 @@ class Node {
         nodeElement.setAttribute('cy', `${this.y}`);
         nodeElement.setAttribute('r', `${this.radius}`);
         nodeElement.setAttribute('fill', 'paleturquoise');
-        nodeElement.setAttribute('stroke', 'blue');
+        nodeElement.setAttribute('stroke', 'black');
         nodeElement.setAttribute('stroke-width', '1');
         return nodeElement;
     }
@@ -96,7 +96,7 @@ class Node {
         tag.setAttribute('x', `${this.x}`);
         tag.setAttribute('y', `${this.y+availableRadius/4}`);
         tag.setAttribute('fill', 'black');
-        tag.setAttribute('font-size',  `${availableRadius*0.8}`);
+        tag.setAttribute('font-size',  `${availableRadius-(availableRadius/10)**2}`);
         tag.setAttribute('font-family', 'Verdana');
         tag.setAttribute('text-anchor', 'middle');
         tag.textContent = `${this.tagName}`;
