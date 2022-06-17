@@ -63,11 +63,12 @@ h5 {
 
 #data-container {
     display: flex;
-    height: 100vh;
+    height: 30vh;
     flex-direction: column;
     width: 95%;
     overflow: auto;
     margin-left: 0.5rem;
+    margin-top: 1rem;
 }
 
 #button-group {
@@ -77,7 +78,7 @@ h5 {
     align-items: center;
     height: 10%;
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     margin-bottom: 0.5rem;
 }
 
@@ -96,6 +97,10 @@ h5 {
 }
 
 @media (min-width: 60em) and (orientation: landscape) {
+
+    #input-data {
+        height: 300vh;
+    }
 
     #SVG {
         display: flex;
