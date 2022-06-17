@@ -1,11 +1,14 @@
 const SVG = document.getElementById('SVG');
 const TXT = document.getElementById("input-data");
 const SKETCH = document.getElementById("sketch")
-
-
+const CLEAR = document.getElementById("clear");
+const ADJUST = document.getElementById("adjust");
 const availableWidth = SVG.clientWidth;
 const availableHeight = SVG.clientHeight;
-const availableRadius = (availableWidth + availableHeight) / 70;
+const minLength = Math.min(SVG.clientWidth, SVG.clientHeight);
+const maxLength = Math.max(SVG.clientWidth, SVG.clientHeight);
+const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
+
 
 let nodesInput = {};
 let board = [];
@@ -15,7 +18,7 @@ const dataParser = (e) => {
     
     if (e.keyCode === 13) {
         const text = TXT.value;
-        const parsedData = [...text.matchAll(/(\S*)\s*-[>+*]\s*(\S*)/gm)].map(match => [match[1], match[2]]);
+        const parsedData = [...text.matchAll(/(\S*)\s*[-=][>+*]\s*(\S*)/gm)].map(match => [match[1], match[2]]);
         if (parsedData.length > 0) {
             const startNode = parsedData.at(-1)[0];
             const endNode = parsedData.at(-1)[1];
@@ -39,10 +42,9 @@ const dataParser = (e) => {
 document.addEventListener("keypress", dataParser);
 
 
-const randomAxisGenerator = (tolerance=2*availableRadius) => {
-    const height = tolerance + Math.floor(Math.random() * (availableHeight - tolerance * 2));
-    const width = tolerance + Math.floor(Math.random() * (availableWidth - tolerance * 2));
-
+const randomAxisGenerator = (margin=availableRadius) => {
+    const height = margin + Math.floor(Math.random() * (SVG.clientHeight - margin * 2));
+    const width = margin + Math.floor(Math.random() * (SVG.clientWidth - margin * 2));
     return new Axis(height, width);
 }
 
@@ -61,7 +63,7 @@ class Axis {
         this.width = width;
     }
 
-    overlaps(other, tolerance=5*availableRadius) {
+    overlaps(other, tolerance=3*availableRadius) {
         const xDifSquared = (this.width - other.width) ** 2;
         const yDifSquared = (this.height - other.height) ** 2;
         const distanceSquared = Math.sqrt(xDifSquared + yDifSquared);
@@ -209,3 +211,9 @@ const clearSketch = () => {
 
 
 SKETCH.addEventListener("click", sketch);
+
+const doLog = () => {
+    console.log("adjusting");
+}
+ADJUST.addEventListener('click', doLog);
+console.log("adjusting");

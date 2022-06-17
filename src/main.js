@@ -1,6 +1,8 @@
 const SVG = document.getElementById('SVG');
 const TXT = document.getElementById("input-data");
 const SKETCH = document.getElementById("sketch")
+const CLEAR = document.getElementById("clear");
+const ADJUST = document.getElementById("adjust");
 
 
 const availableWidth = SVG.clientWidth;
@@ -209,3 +211,12 @@ const clearSketch = () => {
 
 
 SKETCH.addEventListener("click", sketch);
+
+
+class testClass {
+    doLog() {
+        console.log('logging');
+    }
+}
+
+const instance = new testClass();
