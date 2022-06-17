@@ -223,21 +223,29 @@ const fileHandler = () => {
         reader.addEventListener('load', loadingAction);
         if (file) {
             reader.readAsText(file);
-
         }
         FILE_SELECTOR.removeEventListener('change', action);
     }
-    FILE_SELECTOR.addEventListener('change', action)
+    FILE_SELECTOR.addEventListener('change', action);
 }
 
-// const parser = (text) => {
-//     const
-// }
+const parser = () => {
+    const lines = TXT.value.split('\n');
+    const pairs = [];
+    const items = lines.map(item => {
+       
+        matchedItem = item.match(/^[^-=>+ ]+|[^-=>+ ]+$/g);
+        if (matchedItem) {
+            pairs.push(matchedItem);
+        }
+    });
+    console.log(pairs);
+}
 
 
 
 SKETCH.addEventListener("click", sketch);
 
-CLEAR.addEventListener("click", clearSketch);
+CLEAR.addEventListener("click", parser);
 
 

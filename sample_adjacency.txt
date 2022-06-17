@@ -1,0 +1,7 @@
+A -> BB
+BB -> C
+C -> DD
+D -> B
+C -> ZZZ
+DD -> C
+B -> BB
