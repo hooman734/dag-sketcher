@@ -216,16 +216,24 @@ const fileHandler = () => {
     const action = () => {
         const file = FILE_SELECTOR.files[0];
         const reader = new FileReader();
-        reader.addEventListener('load', () => {
+        const loadingAction = () => {
             TXT.value = reader.result;
-        });
+            reader.removeEventListener('load', loadingAction);
+        }
+        reader.addEventListener('load', loadingAction);
         if (file) {
             reader.readAsText(file);
+
         }
         FILE_SELECTOR.removeEventListener('change', action);
     }
     FILE_SELECTOR.addEventListener('change', action)
 }
+
+// const parser = (text) => {
+//     const
+// }
+
 
 
 SKETCH.addEventListener("click", sketch);
