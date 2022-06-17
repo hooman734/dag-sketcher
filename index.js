@@ -231,15 +231,23 @@ const fileHandler = () => {
 
 const parser = () => {
     const lines = TXT.value.split('\n');
+    const adjacencyList = {};
     const pairs = [];
-    const items = lines.map(item => {
+    lines.map(item => {
        
         matchedItem = item.match(/^[^-=>+ ]+|[^-=>+ ]+$/g);
         if (matchedItem) {
             pairs.push(matchedItem);
         }
     });
-    console.log(pairs);
+    pairs.forEach(pair => {
+        if (pair[0] in adjacencyList) {
+            adjacencyList[pair[0]].push(pair[1]);
+        } else {
+            adjacencyList[pair[0]] = [pair[1]];
+        }
+    });
+    console.log(adjacencyList);
 }
 
 
