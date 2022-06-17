@@ -7,6 +7,7 @@ const FILE_INPUT = document.getElementById("file-input");
 
 FILE_INPUT.addEventListener("click", () => {
     FILE_SELECTOR.click();
+    fileHandler();
 });
 
 const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
@@ -209,6 +210,21 @@ const clearSketch = () => {
     nodes = [];
     arrows = [];
     board=[];
+}
+
+const fileHandler = () => {
+    const action = () => {
+        const file = FILE_SELECTOR.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', () => {
+            TXT.value = reader.result;
+        });
+        if (file) {
+            reader.readAsText(file);
+        }
+        FILE_SELECTOR.removeEventListener('change', action);
+    }
+    FILE_SELECTOR.addEventListener('change', action)
 }
 
 
