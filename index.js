@@ -17,34 +17,6 @@ let nodesInput = {};
 let board = [];
 
 
-const dataParser = (e) => {
-    
-    if (e.keyCode === 13) {
-        const text = TXT.value;
-        const parsedData = [...text.matchAll(/(\S*)\s*[-=][>+*]\s*(\S*)/gm)].map(match => [match[1], match[2]]);
-        if (parsedData.length > 0) {
-            const startNode = parsedData.at(-1)[0];
-            const endNode = parsedData.at(-1)[1];
-            const startNodes = Object.keys(nodesInput);
-            if (!startNodes.includes(endNode)) {
-                nodesInput[`${endNode}`] = [];
-            }
-            if (startNodes.includes(startNode)) {
-                nodesInput[`${startNode}`] = [...nodesInput[`${startNode}`], `${endNode}`];
-            } else {
-                nodesInput[`${startNode}`] = [`${endNode}`];
-            }
-            console.log(nodesInput);
-        } else {
-            nodesInput = {};
-            board = [];
-        }
-    }
-}
-
-document.addEventListener("keypress", dataParser);
-
-
 const randomAxisGenerator = (margin=1.5*availableRadius) => {
     const height = margin + Math.floor(Math.random() * (SVG.clientHeight - margin * 2));
     const width = margin + Math.floor(Math.random() * (SVG.clientWidth - margin * 2));
@@ -174,6 +146,8 @@ let arrows = [];
 
 const sketch = () => {
     clearSketch();
+    parser();
+    setTimeout(() => {}, 1000);
     const nodeNames = Object.keys(nodesInput);
     
     nodeNames.forEach(nodeName => {
@@ -241,15 +215,17 @@ const parser = () => {
         }
     });
     pairs.forEach(pair => {
+        if (pair[1] in adjacencyList === false) {
+            adjacencyList[pair[1]] = [];
+        }
         if (pair[0] in adjacencyList) {
             adjacencyList[pair[0]].push(pair[1]);
         } else {
             adjacencyList[pair[0]] = [pair[1]];
         }
     });
-    console.log(adjacencyList);
+    nodesInput = adjacencyList;
 }
-
 
 
 SKETCH.addEventListener("click", sketch);
