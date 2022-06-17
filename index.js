@@ -2,7 +2,13 @@ const SVG = document.getElementById('SVG');
 const TXT = document.getElementById("input-data");
 const SKETCH = document.getElementById("sketch")
 const CLEAR = document.getElementById("clear");
-const ADJUST = document.getElementById("adjust");
+const FILE_SELECTOR = document.getElementById("file-selector");
+const FILE_INPUT = document.getElementById("file-input");
+
+FILE_INPUT.addEventListener("click", () => {
+    FILE_SELECTOR.click();
+});
+
 const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
 
 
@@ -208,8 +214,6 @@ const clearSketch = () => {
 
 SKETCH.addEventListener("click", sketch);
 
-const doLog = () => {
-    console.log("adjusting");
-}
-ADJUST.addEventListener('click', doLog);
-console.log("adjusting");
+CLEAR.addEventListener("click", clearSketch);
+
+

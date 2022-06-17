@@ -34,6 +34,10 @@ body {
     margin-right: 0.5rem;
 }
 
+#file-selector {
+    display: none;
+}
+
 h3 {
     font-size: 1em;
     color: rgb(44, 9, 9);
@@ -82,7 +86,7 @@ h5 {
     margin-bottom: 0.5rem;
 }
 
-#sketch, #clear, #adjust {
+#sketch, #clear, #file-input {
     margin-bottom: 1rem;
     margin-top: 1rem;
     padding: 0.5rem 1rem;
@@ -146,7 +150,7 @@ h5 {
         color: rgb(44, 9, 9);
     }
 
-    #sketch, #clear, #adjust {
+    #sketch, #clear, #file-input {
         margin-bottom: 1rem;
         padding: 0.5rem 1rem;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -174,7 +178,7 @@ h5 {
 }
 
 @media (min-width: 100em) {
-    #sketch, #clear, #adjust {
+    #sketch, #clear, #file-input {
        
         padding: 0.5rem 3rem;
  
