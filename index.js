@@ -147,7 +147,9 @@ let arrows = [];
 const sketch = () => {
     clearSketch();
     parser();
-    setTimeout(() => {}, 1000);
+    if (nodesInput.length) {
+        return
+    }
     const nodeNames = Object.keys(nodesInput);
     
     nodeNames.forEach(nodeName => {
@@ -210,7 +212,7 @@ const parser = () => {
     lines.map(item => {
        
         matchedItem = item.match(/^[^-=>+ ]+|[^-=>+ ]+$/g);
-        if (matchedItem) {
+        if (matchedItem && matchedItem.length === 2 && matchedItem[0] !== undefined && matchedItem[1] !== undefined) {
             pairs.push(matchedItem);
         }
     });
@@ -229,7 +231,7 @@ const parser = () => {
 
 
 SKETCH.addEventListener("click", () => {
-    if (TXT.value === '') {
+    if (TXT.value === '' || nodesInput === {}) {
         alert('Please input data first.');
     } else {
         sketch();
