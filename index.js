@@ -228,8 +228,17 @@ const parser = () => {
 }
 
 
-SKETCH.addEventListener("click", sketch);
+SKETCH.addEventListener("click", () => {
+    if (TXT.value === '') {
+        alert('Please input data first.');
+    } else {
+        sketch();
+    }
+});
 
-CLEAR.addEventListener("click", parser);
+CLEAR.addEventListener("click", () =>{
+    nodesInput = {};
+    TXT.value = '';
+});
 
 

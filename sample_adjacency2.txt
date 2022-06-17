@@ -1,0 +1,9 @@
+Iran => Asia
+China => Asia
+U.S. => America
+Venezuela => America
+Germany => Europe
+Europe => World
+Asia => World
+America => World
+World => Galaxy
