@@ -3,10 +3,6 @@ const TXT = document.getElementById("input-data");
 const SKETCH = document.getElementById("sketch")
 const CLEAR = document.getElementById("clear");
 const ADJUST = document.getElementById("adjust");
-const availableWidth = SVG.clientWidth;
-const availableHeight = SVG.clientHeight;
-const minLength = Math.min(SVG.clientWidth, SVG.clientHeight);
-const maxLength = Math.max(SVG.clientWidth, SVG.clientHeight);
 const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
 
 
@@ -42,7 +38,7 @@ const dataParser = (e) => {
 document.addEventListener("keypress", dataParser);
 
 
-const randomAxisGenerator = (margin=availableRadius) => {
+const randomAxisGenerator = (margin=1.5*availableRadius) => {
     const height = margin + Math.floor(Math.random() * (SVG.clientHeight - margin * 2));
     const width = margin + Math.floor(Math.random() * (SVG.clientWidth - margin * 2));
     return new Axis(height, width);
