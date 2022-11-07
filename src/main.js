@@ -2,40 +2,19 @@ const SVG = document.getElementById('SVG');
 const TXT = document.getElementById("input-data");
 const SKETCH = document.getElementById("sketch")
 const CLEAR = document.getElementById("clear");
-const ADJUST = document.getElementById("adjust");
+const FILE_SELECTOR = document.getElementById("file-selector");
+const FILE_INPUT = document.getElementById("file-input");
+
+FILE_INPUT.addEventListener("click", () => {
+    FILE_SELECTOR.click();
+    fileHandler();
+});
+
 const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
 
 
 let nodesInput = {};
 let board = [];
-
-
-const dataParser = (e) => {
-    
-    if (e.keyCode === 13) {
-        const text = TXT.value;
-        const parsedData = [...text.matchAll(/(\S*)\s*[-=][>+*]\s*(\S*)/gm)].map(match => [match[1], match[2]]);
-        if (parsedData.length > 0) {
-            const startNode = parsedData.at(-1)[0];
-            const endNode = parsedData.at(-1)[1];
-            const startNodes = Object.keys(nodesInput);
-            if (!startNodes.includes(endNode)) {
-                nodesInput[`${endNode}`] = [];
-            }
-            if (startNodes.includes(startNode)) {
-                nodesInput[`${startNode}`] = [...nodesInput[`${startNode}`], `${endNode}`];
-            } else {
-                nodesInput[`${startNode}`] = [`${endNode}`];
-            }
-            console.log(nodesInput);
-        } else {
-            nodesInput = {};
-            board = [];
-        }
-    }
-}
-
-document.addEventListener("keypress", dataParser);
 
 
 const randomAxisGenerator = (margin=1.5*availableRadius) => {
@@ -167,6 +146,10 @@ let arrows = [];
 
 const sketch = () => {
     clearSketch();
+    parser();
+    if (nodesInput.length) {
+        return
+    }
     const nodeNames = Object.keys(nodesInput);
     
     nodeNames.forEach(nodeName => {
@@ -205,11 +188,59 @@ const clearSketch = () => {
     board=[];
 }
 
-
-SKETCH.addEventListener("click", sketch);
-
-const doLog = () => {
-    console.log("adjusting");
+const fileHandler = () => {
+    const action = () => {
+        const file = FILE_SELECTOR.files[0];
+        const reader = new FileReader();
+        const loadingAction = () => {
+            TXT.value = reader.result;
+            reader.removeEventListener('load', loadingAction);
+        }
+        reader.addEventListener('load', loadingAction);
+        if (file) {
+            reader.readAsText(file);
+        }
+        FILE_SELECTOR.removeEventListener('change', action);
+    }
+    FILE_SELECTOR.addEventListener('change', action);
 }
-ADJUST.addEventListener('click', doLog);
-console.log("adjusting");
+
+const parser = () => {
+    const lines = TXT.value.split('\n');
+    const adjacencyList = {};
+    const pairs = [];
+    lines.map(item => {
+       
+        matchedItem = item.match(/^[^-=>+ ]+|[^-=>+ ]+$/g);
+        if (matchedItem && matchedItem.length === 2 && matchedItem[0] !== undefined && matchedItem[1] !== undefined) {
+            pairs.push(matchedItem);
+        }
+    });
+    pairs.forEach(pair => {
+        if (pair[1] in adjacencyList === false) {
+            adjacencyList[pair[1]] = [];
+        }
+        if (pair[0] in adjacencyList) {
+            adjacencyList[pair[0]].push(pair[1]);
+        } else {
+            adjacencyList[pair[0]] = [pair[1]];
+        }
+    });
+    nodesInput = adjacencyList;
+}
+
+
+SKETCH.addEventListener("click", () => {
+    if (TXT.value === '' || nodesInput === {}) {
+        alert('Please input data first.');
+    } else {
+        sketch();
+    }
+});
+
+CLEAR.addEventListener("click", () =>{
+    nodesInput = {};
+    TXT.value = '';
+});
+
+
