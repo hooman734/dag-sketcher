@@ -60,7 +60,7 @@ class Node {
         nodeElement.setAttribute('cx', `${this.x}`);
         nodeElement.setAttribute('cy', `${this.y}`);
         nodeElement.setAttribute('r', `${this.radius}`);
-        nodeElement.setAttribute('fill', 'paleturquoise');
+        nodeElement.setAttribute('fill', 'none');//paleturquoise
         nodeElement.setAttribute('stroke', 'black');
         nodeElement.setAttribute('stroke-width', '1');
         return nodeElement;
@@ -87,6 +87,52 @@ class Node {
         svg.removeChild(this.tagElement);
         svg.removeChild(this.element);
     }
+}
+
+class SelfArrow {
+    constructor(x, y, margin=3*AVAILABLE_RADIUS/4) {
+        this.x = x + margin;
+        this.y = y + margin;
+        this.elements = this.arrowElementMaker();
+    }
+
+    arrowElementMaker() {
+        const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+        const marker = document.createElementNS('http://www.w3.org/2000/svg','marker');
+        const polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+        const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+
+        marker.setAttribute('id', 'arrowhead');
+        marker.setAttribute('markerWidth', '10');
+        marker.setAttribute('markerHeight', '7');
+        marker.setAttribute('refX', `${AVAILABLE_RADIUS+18-(AVAILABLE_RADIUS/10)**2}`);
+        marker.setAttribute('refY', '3.5');
+        marker.setAttribute('orient', 'auto');
+
+        polygon.setAttribute('points', '0 0, 10 3.5, 0 7');
+
+        circle.setAttribute('cx', `${this.x}`);
+        circle.setAttribute('cy', `${this.y}`);
+        circle.setAttribute('r', `${AVAILABLE_RADIUS/2}`);
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', 'black');
+        circle.setAttribute('stroke-width', '1.5');
+
+        marker.appendChild(polygon);
+        defs.appendChild(marker);
+
+        return [defs, circle];
+    }
+
+    show(svg) {
+        svg.appendChild(this.elements[0]);
+        svg.appendChild(this.elements[1]);
+    }
+
+    remove(svg) {
+        this.elements.forEach(element => svg.removeChild(element));
+    }
+
 }
 
 
@@ -146,7 +192,7 @@ const sketch = () => {
     clearSketch();
     parser();
     if (nodesInput.length) {
-        return
+        return;
     }
     const nodeNames = Object.keys(nodesInput);
     
@@ -159,7 +205,12 @@ const sketch = () => {
     nodes.forEach(node => {
         node.neighbors.forEach(neighbor => {
             const neighborNode = nodes.find(node => node.tagName === neighbor);
-            const newArrow = new Arrow(node.x, node.y, neighborNode.x, neighborNode.y);
+            let newArrow = null;
+            if (node.tagName === neighborNode.tagName) {
+                newArrow = new SelfArrow(node.x, node.y);
+            } else {
+                newArrow = new Arrow(node.x, node.y, neighborNode.x, neighborNode.y);
+            }
             arrows.push(newArrow);
             newArrow.show(SVG);
         });
