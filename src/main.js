@@ -4,20 +4,18 @@ const SKETCH = document.getElementById("sketch")
 const CLEAR = document.getElementById("clear");
 const FILE_SELECTOR = document.getElementById("file-selector");
 const FILE_INPUT = document.getElementById("file-input");
+const AVAILABLE_RADIUS = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 210;
+
+let nodesInput = {};
+let board = [];
+
 
 FILE_INPUT.addEventListener("click", () => {
     FILE_SELECTOR.click();
     fileHandler();
 });
 
-const availableRadius = (4*Math.min(SVG.clientWidth, SVG.clientHeight) + 3*Math.max(SVG.clientWidth, SVG.clientHeight)) / 90;
-
-
-let nodesInput = {};
-let board = [];
-
-
-const randomAxisGenerator = (margin=1.5*availableRadius) => {
+const randomAxisGenerator = (margin=1.5*AVAILABLE_RADIUS) => {
     const height = margin + Math.floor(Math.random() * (SVG.clientHeight - margin * 2));
     const width = margin + Math.floor(Math.random() * (SVG.clientWidth - margin * 2));
     return new Axis(height, width);
@@ -38,7 +36,7 @@ class Axis {
         this.width = width;
     }
 
-    overlaps(other, tolerance=3*availableRadius) {
+    overlaps(other, tolerance=3*AVAILABLE_RADIUS) {
         const xDifSquared = (this.width - other.width) ** 2;
         const yDifSquared = (this.height - other.height) ** 2;
         const distanceSquared = Math.sqrt(xDifSquared + yDifSquared);
@@ -47,7 +45,7 @@ class Axis {
 }
 
 class Node {
-    constructor(tagName, x, y, neighbors=[], radius=availableRadius) {
+    constructor(tagName, x, y, neighbors=[], radius=AVAILABLE_RADIUS) {
         this.radius = radius;
         this.x = x + this.radius;
         this.y = y + this.radius;
@@ -71,9 +69,9 @@ class Node {
     nodeTagMaker() {
         const tag = document.createElementNS('http://www.w3.org/2000/svg','text');
         tag.setAttribute('x', `${this.x}`);
-        tag.setAttribute('y', `${this.y+availableRadius/4}`);
+        tag.setAttribute('y', `${this.y+AVAILABLE_RADIUS/4}`);
         tag.setAttribute('fill', 'black');
-        tag.setAttribute('font-size',  `${availableRadius-(availableRadius/10)**2}`);
+        tag.setAttribute('font-size',  `${AVAILABLE_RADIUS-(AVAILABLE_RADIUS/10)**2}`);
         tag.setAttribute('font-family', 'Verdana');
         tag.setAttribute('text-anchor', 'middle');
         tag.textContent = `${this.tagName}`;
@@ -93,7 +91,7 @@ class Node {
 
 
 class Arrow {
-    constructor(x1, y1, x2, y2, margin=availableRadius/3) {
+    constructor(x1, y1, x2, y2, margin=AVAILABLE_RADIUS/3) {
         this.x1 = x1 + margin;
         this.y1 = y1 + margin;
         this.x2 = x2;
@@ -110,7 +108,7 @@ class Arrow {
         marker.setAttribute('id', 'arrowhead');
         marker.setAttribute('markerWidth', '10');
         marker.setAttribute('markerHeight', '7');
-        marker.setAttribute('refX', `${availableRadius+8-(availableRadius/10)**2}`);
+        marker.setAttribute('refX', `${AVAILABLE_RADIUS+8-(AVAILABLE_RADIUS/10)**2}`);
         marker.setAttribute('refY', '3.5');
         marker.setAttribute('orient', 'auto');
 
